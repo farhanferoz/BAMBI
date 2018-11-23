@@ -1,0 +1,94 @@
+************************************************************************************
+BAMBI v1.2
+Copyright Philip Graff, Farhan Ferox, Michael P. Hobson
+Release May 2014
+************************************************************************************
+
+Installation:
+
+BAMBI requires LAPACK and CBLAS, which is available from:
+http://www.netlib.org/
+For Mac, it is available through the MacPorts "atlas" port.
+
+************************************************************************************
+
+Examples:
+
+The eggbox (C/C++) and Gaussian shell (Fortran) examples will demonstrate how to write likelihood and prior
+functions for BAMBI and how to call the sampler. This is all identical to the way that MultiNest is setup.
+The examples also provide sample network input files. In all cases, the bambi.cc file is necessary but should
+not be modified when used for other problems.
+
+************************************************************************************
+
+Network Inputs File:
+
+See the eggbox and Gaussian shell examples for example input files. The entries in input file are described below:
+
+--------------------------------------------------------------------------
+	Data-Handling options
+--------------------------------------------------------------------------
+whitenin					whether to whiten the inputs and the transform to use
+whitenout					whether to whiten the outputs and the transform to use
+
+--------------------------------------------------------------------------
+	Network and Training options
+--------------------------------------------------------------------------
+nhid                        no. of nodes in the hidden layer. For multiple hidden layers,
+                            define nhid multiple times with the no. of nodes required in
+                            each hidden layer in order.
+activation                  manually set activation function of layer connections
+                            options are: 0=linear, 1=sigmoid, 2=tanh,
+                                         3=rectified linear, 4=softsign
+                            default is 1 for all hidden and 0 for output
+			    e.g. for a network with 3 layers (input, hidden & output), 10 would
+			    set sigmoid & linear activation for hidden & output layers respectively
+prior                       use prior/regularization
+noise_scaling               if noise level (standard deviation of outputs) is to be estimated
+set_whitened_noise          whether the noise is to be set on whitened data
+sigma                       initial noise level, set on (un-)whitened data
+confidence_rate             step size factor, higher values are more aggressive. default=0.1
+confidence_rate_minimum     minimum confidence rate allowed
+max_iter                    max no. of iterations allowed
+startstdev                  the standard deviation of the initial random weights
+convergence_function        function to use for convergence testing, default is 4=error squared
+                            1=log-posterior, 2=log-likelihood, 3=correlation
+historic_maxent             experimental implementation of MemSys's historic maxent option
+line_search					perform line search for optimal distance
+                            0 = none (default), 1 = golden section, 2 = linbcg lnsrch
+
+--------------------------------------------------------------------------
+	Output options
+--------------------------------------------------------------------------
+verbose						verbosity level of feedback sent to stdout
+iteration_print_frequency	After how many iterations, the feedback should be given to the user
+calculate_evidence			whether to calculate the evidence at the convergence
+
+--------------------------------------------------------------------------
+	Autoencoder options
+--------------------------------------------------------------------------
+pretrain					perform pre-training?
+nepoch						number of epochs to use in pre-training
+
+--------------------------------------------------------------------------
+	BAMBI options
+--------------------------------------------------------------------------
+logL_range					range of logL values for determining whether or not to train in BAMBI
+reset_alpha					reset hyperparameter upon resume
+reset_sigma					reset hyperparameters upon resume
+randomise_weights			add random factor to saved weights upon resume
+
+--------------------------------------------------------------------------
+	Debug options
+--------------------------------------------------------------------------
+fix_seed					whther to use a fixed seed?
+fixed_seed					what seed to use if fix_seed=1
+
+************************************************************************************
+
+Change Log:
+
+v1.2:
+  * Updated to SkyNet v1.2
+v1.1:
+  * Updated to SkyNet v1.1
